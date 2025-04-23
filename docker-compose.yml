@@ -1,0 +1,24 @@
+version: '3.8'
+
+services:
+  mongo:
+    image: mongo
+    container_name: mongo
+    ports:
+      - "27017:27017"
+
+  patient-service:
+    build: ./patient-service
+    ports:
+      - "3001:3001"
+    depends_on:
+      - mongo
+    restart: always
+
+
+  appointment-service:
+    build: ./appointment-service
+    ports:
+      - "3002:3002"
+    depends_on:
+      - patient-service
